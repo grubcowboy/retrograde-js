@@ -1,4 +1,5 @@
-import Ephemeris from './deps/ephemeris-1.2.1.bundle.js';
+// TODO: figure out how to import using ES6 imports
+// import Ephemeris from './deps/ephemeris-1.2.1.bundle.js';
 
 let getLocation = () => new Promise((resolve, reject) =>
     navigator.geolocation.getCurrentPosition(resolve, reject));
@@ -14,7 +15,7 @@ async function main() {
         console.log(lat, long);
         console.log("accuracy: ", location.coords.accuracy);
 
-        const ephemeris = new Ephemeris({
+        const ephemeris = new Ephemeris.default({
             year: 2024,
             month: 7,
             day: 15,
@@ -24,8 +25,9 @@ async function main() {
             longitude: long,
             calculateShadows: false,
         });
-
+        console.log(`${ephemeris.Observer.latitude} lat, ${ephemeris.Observer.longitude} long`);
         console.log(ephemeris.Results);
+        console.log(ephemeris.mercury.motion);
 
 
     } catch (e) {
