@@ -1,0 +1,13 @@
+#bodies {
+    display: inline-block;
+}
+
+.icon {
+    border: 1px solid;
+}
+
+#motion-bar {
+    width: 192px;
+    margin-left: 44px;
+    border: red 1px solid;
+}
