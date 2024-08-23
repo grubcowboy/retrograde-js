@@ -4,6 +4,9 @@
 let getLocation = () => new Promise((resolve, reject) =>
     navigator.geolocation.getCurrentPosition(resolve, reject));
 
+const motionBar = document.querySelector('#motion-bar');
+
+
 async function main() {
     try {
         console.log('getting location...');
@@ -28,7 +31,10 @@ async function main() {
         console.log(`${ephemeris.Observer.latitude} lat, ${ephemeris.Observer.longitude} long`);
         console.log(ephemeris.Results);
         console.log(ephemeris.mercury.motion);
+        console.log(ephemeris.sun.motion);
+        console.log(ephemeris.moon.motion);
 
+        setMotionBar();
 
     } catch (e) {
         console.log('ERROR');
@@ -38,4 +44,10 @@ async function main() {
 
 main();
 
-
+function setMotionBar() {
+    for (let i = 0; i < 9; i++) {
+        const segment = document.createElement("div");
+        segment.setAttribute("class", "segment");
+        motionBar.appendChild(segment);
+    };
+}

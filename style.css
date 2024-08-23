@@ -1,5 +1,6 @@
 #bodies {
-    display: inline-block;
+    display: flex;
+    width: 180px;
 }
 
 .icon {
@@ -7,7 +8,14 @@
 }
 
 #motion-bar {
-    width: 192px;
-    margin-left: 44px;
-    border: red 1px solid;
+    width: 180px;
+    /* margin-left: 44px; */
+    /* border: red 1px solid; */
+    display: flex;
+}
+
+.segment {
+    height: 5px;
+    border: .5px solid;
+    width: calc(1/9 * 100%);
 }
