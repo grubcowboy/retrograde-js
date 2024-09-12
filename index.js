@@ -16,7 +16,7 @@ async function main() {
         let lat = location.coords.latitude;
         let long = location.coords.longitude;
         console.log(lat, long);
-        console.log("accuracy: ", location.coords.accuracy);
+        console.log('timestamp: ', location.timestamp);
         // lat/long for birth place - testing
         lat = 40.733550;
         long = -74.008660;
@@ -75,6 +75,19 @@ function sortPlanet(obj) {
     console.log(`directSet: ${directSet}`);
     console.log(`retroSet: ${retroSet}`);
 
+    const planets = retroSet.concat(directSet);
+    console.log(planets);
+
+    const planetDOMs = document.querySelectorAll('.planet');
+    console.log(planetDOMs);
+
+    planetDOMs.forEach((planetDOM, idx) => {
+        planetDOM.src = getIcon(`${planets[idx]}`);
+        console.log(getIcon(`${planets[idx]}`));
+        console.log('retrograde: ', obj[planets[idx]]);
+        // TODO: change color filter if retrograde is true
+        // if (`${obj[planets[idx]]}`);
+    });
 
 
     setMotionBar();
@@ -83,9 +96,30 @@ function sortPlanet(obj) {
 
 
 function setMotionBar() {
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 10; i++) {
         const segment = document.createElement("div");
         segment.setAttribute("class", "segment");
         motionBar.appendChild(segment);
     };
+};
+
+function getIcon(type) {
+    switch (type) {
+        case 'mercury':
+            return './assets/mercury.svg';
+        case 'venus':
+            return './assets/venus.svg';
+        case 'mars':
+            return './assets/mars.svg';
+        case 'jupiter':
+            return './assets/jupiter.svg';
+        case 'saturn':
+            return './assets/saturn.svg';
+        case 'neptune':
+            return './assets/neptune.svg';
+        case 'uranus':
+            return './assets/uranus.svg';
+        case 'pluto':
+            return './assets/pluto.svg';
+    }
 }
