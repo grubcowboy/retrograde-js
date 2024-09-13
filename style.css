@@ -1,3 +1,9 @@
+:root {
+    --red: invert(30%) sepia(87%) saturate(7406%) hue-rotate(355deg) brightness(95%) contrast(120%);
+    --yellow: invert(83%) sepia(99%) saturate(5363%) hue-rotate(323deg) brightness(98%) contrast(106%);
+    --green: invert(29%) sepia(88%) saturate(2034%) hue-rotate(94deg) brightness(93%) contrast(73%);
+}
+
 #bodies {
     display: flex;
     width: 180px;
@@ -9,22 +15,19 @@
 }
 
 .sun {
-    filter: invert(83%) sepia(99%) saturate(5363%) hue-rotate(323deg) brightness(98%) contrast(106%);
+    filter: var(--yellow);
 }
 
 .earth {
-    filter: invert(29%) sepia(88%) saturate(2034%) hue-rotate(94deg) brightness(93%) contrast(73%);
+    filter: var(--green);
 }
 
 #motion-bar {
     width: 180px;
-    /* margin-left: 44px; */
-    /* border: red 1px solid; */
     display: flex;
 }
 
 .segment {
-    /* height: 5px; */
     border: .5px solid;
     width: calc(10% - 1px);
 }

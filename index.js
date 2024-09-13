@@ -85,8 +85,9 @@ function sortPlanet(obj) {
         planetDOM.src = getIcon(`${planets[idx]}`);
         console.log(getIcon(`${planets[idx]}`));
         console.log('retrograde: ', obj[planets[idx]]);
-        // TODO: change color filter if retrograde is true
-        // if (`${obj[planets[idx]]}`);
+        if (obj[planets[idx]]) {
+            planetDOM.style.filter = 'var(--red)';
+        };
     });
 
 
