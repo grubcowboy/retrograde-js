@@ -4,6 +4,12 @@
     --green: invert(29%) sepia(88%) saturate(2034%) hue-rotate(94deg) brightness(93%) contrast(73%);
 }
 
+#timestamp {
+    width: 178px;
+    height: 8px;
+    border: 1px solid;
+}
+
 #bodies {
     display: flex;
     width: 180px;
@@ -23,11 +29,42 @@
 }
 
 #motion-bar {
+    position: relative;
     width: 180px;
+    height: 8px;
     display: flex;
 }
 
 .segment {
-    border: .5px solid;
-    width: calc(10% - 1px);
+    width: calc(10%);
+    /* border: 1px solid */
+}
+
+#motion {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: .5rem;
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    left: 3px;
+}
+
+#direct-text {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: .5rem;
+    color: white;
+    position: absolute;
+    z-index: 2;
+    top: -10px;
+    left: 40px;
+}
+
+#retro-text {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: .5rem;
+    color: #000000;
+    position: absolute;
+    z-index: 3;
+    top: -10px;
+    left: 112px;
 }

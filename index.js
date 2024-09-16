@@ -16,24 +16,29 @@ async function main() {
         let lat = location.coords.latitude;
         let long = location.coords.longitude;
         console.log(lat, long);
-        console.log('timestamp: ', location.timestamp);
         // lat/long for birth place - testing
         lat = 40.733550;
         long = -74.008660;
 
+        const date = new Date();
+        const yr = date.getFullYear();
+        const mo = date.getMonth();
+        const dy = date.getDate();
+        const hr = date.getHours();
+        const min = date.getMinutes();
+
         // NOTE - months go from 0 - 11 (0 = jan)
         const ephemeris = new Ephemeris.default({
-            year: 1988,
-            month: 3,
-            day: 28,
-            hours: 8,
-            minutes: 11,
+            year: yr,
+            month: mo,
+            day: dy,
+            hours: hr,
+            minutes: min,
             latitude: lat,
             longitude: long,
             calculateShadows: false,
         });
 
-        console.log(`${ephemeris.Observer.latitude} lat, ${ephemeris.Observer.longitude} long`);
         console.log(ephemeris.Results);
         console.log('mercury retrograde: ', ephemeris.mercury.motion.isRetrograde);
 
@@ -63,9 +68,9 @@ async function main() {
 main();
 
 
-function sortPlanet(obj) {
+function sortPlanet(retroMap) {
     const retroSet = [], directSet = [];
-    for (const [planet, isRetrograde] of Object.entries(obj)) {
+    for (const [planet, isRetrograde] of Object.entries(retroMap)) {
         if (isRetrograde) {
             retroSet.push(planet);
         } else {
@@ -75,33 +80,47 @@ function sortPlanet(obj) {
     console.log(`directSet: ${directSet}`);
     console.log(`retroSet: ${retroSet}`);
 
-    const planets = retroSet.concat(directSet);
-    console.log(planets);
+    const planetSet = directSet.concat(retroSet);
+    console.log(planetSet);
 
     const planetDOMs = document.querySelectorAll('.planet');
-    console.log(planetDOMs);
 
     planetDOMs.forEach((planetDOM, idx) => {
-        planetDOM.src = getIcon(`${planets[idx]}`);
-        console.log(getIcon(`${planets[idx]}`));
-        console.log('retrograde: ', obj[planets[idx]]);
-        if (obj[planets[idx]]) {
+        planetDOM.src = getIcon(`${planetSet[idx]}`);
+        if (retroMap[planetSet[idx]]) {
             planetDOM.style.filter = 'var(--red)';
         };
     });
 
 
-    setMotionBar();
+
+    setMotionBar(directSet.length + 2);
 
 };
 
 
-function setMotionBar() {
+function setMotionBar(dSMax) {
     for (let i = 0; i < 10; i++) {
         const segment = document.createElement("div");
         segment.setAttribute("class", "segment");
         motionBar.appendChild(segment);
+        if (i > 1 && i < dSMax) {
+            segment.style.backgroundColor = '#000000';
+            segment.setAttribute("class", "segment direct");
+        } else if (i >= dSMax) {
+            segment.style.backgroundColor = '#FF0000';
+            segment.setAttribute("class", " segment retro");
+        }
     };
+    const dir = document.createElement("p");
+    dir.innerHTML = 'direct';
+    dir.setAttribute("id", "direct-text");
+    motionBar.appendChild(dir);
+    const ret = document.createElement("p");
+    ret.innerHTML = 'retrograde';
+    ret.setAttribute("id", "retro-text");
+    motionBar.appendChild(ret);
+
 };
 
 function getIcon(type) {
