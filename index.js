@@ -42,6 +42,16 @@ async function main() {
         console.log(ephemeris.Results);
         console.log('mercury retrograde: ', ephemeris.mercury.motion.isRetrograde);
 
+        // const planetRetro = {
+        //     'mercury': true,
+        //     'venus': true,
+        //     'mars': true,
+        //     'jupiter': true,
+        //     'saturn': true,
+        //     'neptune': true,
+        //     'uranus': false,
+        //     'pluto': true,
+        // };
         const planetRetro = {
             'mercury': ephemeris.mercury.motion.isRetrograde,
             'venus': ephemeris.venus.motion.isRetrograde,
@@ -56,7 +66,6 @@ async function main() {
         console.log(planetRetro);
 
         sortPlanet(planetRetro);
-
 
 
     } catch (e) {
@@ -88,40 +97,78 @@ function sortPlanet(retroMap) {
     planetDOMs.forEach((planetDOM, idx) => {
         planetDOM.src = getIcon(`${planetSet[idx]}`);
         if (retroMap[planetSet[idx]]) {
-            planetDOM.style.filter = 'var(--red)';
+            planetDOM.style.filter = "var(--red)";
         };
     });
 
-
-
     setMotionBar(directSet.length + 2);
-
 };
 
 
 function setMotionBar(dSMax) {
+    const mot = document.createElement("p");
+    mot.setAttribute("id", "motion-text");
+    mot.innerHTML = "motion";
+    motionBar.appendChild(mot);
+
     for (let i = 0; i < 10; i++) {
         const segment = document.createElement("div");
         segment.setAttribute("class", "segment");
         motionBar.appendChild(segment);
         if (i > 1 && i < dSMax) {
-            segment.style.backgroundColor = '#000000';
+            segment.style.backgroundColor = "#000000";
             segment.setAttribute("class", "segment direct");
         } else if (i >= dSMax) {
-            segment.style.backgroundColor = '#FF0000';
+            segment.style.backgroundColor = "#FF0000";
             segment.setAttribute("class", " segment retro");
         }
     };
-    const dir = document.createElement("p");
-    dir.innerHTML = 'direct';
-    dir.setAttribute("id", "direct-text");
-    motionBar.appendChild(dir);
+
+    if (dSMax > 2) {
+        const dir = document.createElement("p");
+        dir.setAttribute("id", "direct-text");
+        dir.setAttribute("class", `three`);
+        motionBar.appendChild(dir);
+        if (dSMax - 2 === 1) {
+            dir.innerHTML = "dir";
+        } else {
+            dir.innerHTML = "direct";
+        }
+    }
+
     const ret = document.createElement("p");
-    ret.innerHTML = 'retrograde';
     ret.setAttribute("id", "retro-text");
     motionBar.appendChild(ret);
-
+    ret.setAttribute("class", `${getPlacement(dSMax + 1)}`);
+    if (dSMax === 9) {
+        ret.innerHTML = "ret";
+    } else if (dSMax === 8) {
+        ret.innerHTML = "retro";
+    } else {
+        ret.innerHTML = "retrograde";
+    }
 };
+
+function getPlacement(int) {
+    switch (int) {
+        case 3:
+            return "three";
+        case 4:
+            return "four";
+        case 5:
+            return "five";
+        case 6:
+            return "six";
+        case 7:
+            return "seven";
+        case 8:
+            return "eight";
+        case 9:
+            return "nine";
+        case 10:
+            return "ten";
+    }
+}
 
 function getIcon(type) {
     switch (type) {

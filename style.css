@@ -5,19 +5,19 @@
 }
 
 #timestamp {
-    width: 178px;
-    height: 8px;
-    border: 1px solid;
+    width: 534px;
+    height: 24px;
+    border: 3px solid;
 }
 
 #bodies {
     display: flex;
-    width: 180px;
+    width: 540px;
 }
 
 .icon {
-    border: 1px solid black;
-    width: 16px;
+    border: 3px solid black;
+    height: 48px;
 }
 
 .sun {
@@ -30,41 +30,71 @@
 
 #motion-bar {
     position: relative;
-    width: 180px;
-    height: 8px;
+    width: 540px;
+    height: 24px;
     display: flex;
 }
 
 .segment {
     width: calc(10%);
-    /* border: 1px solid */
+    /* border: 1px solid gray; */
 }
 
-#motion {
+#motion-text {
     font-family: "Space Grotesk", sans-serif;
-    font-size: .5rem;
+    font-size: 1.5rem;
     position: absolute;
     z-index: 1;
-    top: -10px;
-    left: 3px;
+    top: -29px;
+    left: 1px;
 }
 
 #direct-text {
     font-family: "Space Grotesk", sans-serif;
-    font-size: .5rem;
+    font-size: 1.5rem;
     color: white;
     position: absolute;
     z-index: 2;
-    top: -10px;
-    left: 40px;
+    top: -29px;
 }
 
 #retro-text {
     font-family: "Space Grotesk", sans-serif;
-    font-size: .5rem;
-    color: #000000;
+    font-size: 1.5rem;
+    color: black;
     position: absolute;
     z-index: 3;
-    top: -10px;
-    left: 112px;
+    top: -29px;
+}
+
+.three {
+    left: 109px;
+}
+
+.four {
+    left: 163px;
+}
+
+.five {
+    left: 217px;
+}
+
+.six {
+    left: 271px;
+}
+
+.seven {
+    left: 325px;
+}
+
+.eight {
+    left: 379px;
+}
+
+.nine {
+    left: 433px;
+}
+
+.ten {
+    left: 487px;
 }
