@@ -1,18 +1,35 @@
 :root {
-    --red: invert(30%) sepia(87%) saturate(7406%) hue-rotate(355deg) brightness(95%) contrast(120%);
-    --yellow: invert(83%) sepia(99%) saturate(5363%) hue-rotate(323deg) brightness(98%) contrast(106%);
-    --green: invert(29%) sepia(88%) saturate(2034%) hue-rotate(94deg) brightness(93%) contrast(73%);
+    --green-filter: brightness(0) saturate(100%) invert(90%) sepia(52%) saturate(5518%) hue-rotate(28deg) brightness(94%) contrast(103%);
+    --green: #85f40b;
+}
+
+#retro-app {
+    width: 540px;
 }
 
 #timestamp {
-    width: 534px;
+    position: relative;
+    display: flex;
     height: 24px;
-    border: 3px solid;
+    background-color: black;
+}
+
+#current {
+    position: absolute;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.5rem;
+    top: -27px;
+    left: 2px;
+    color: white;
 }
 
 #bodies {
     display: flex;
-    width: 540px;
+}
+
+.sun,
+.earth {
+    background-color: black;
 }
 
 .icon {
@@ -20,24 +37,14 @@
     height: 48px;
 }
 
-.sun {
-    filter: var(--yellow);
-}
-
-.earth {
-    filter: var(--green);
-}
-
 #motion-bar {
     position: relative;
-    width: 540px;
     height: 24px;
     display: flex;
 }
 
 .segment {
     width: calc(10%);
-    /* border: 1px solid gray; */
 }
 
 #motion-text {
@@ -65,6 +72,15 @@
     position: absolute;
     z-index: 3;
     top: -29px;
+}
+
+
+.one {
+    background-color: var(--green);
+}
+
+.two {
+    background-color: var(--green);
 }
 
 .three {
@@ -97,4 +113,11 @@
 
 .ten {
     left: 487px;
+}
+
+@media (max-width: 435px) {
+    body {
+        margin-left: 0px;
+        margin-top: 0px;
+    }
 }

@@ -4,21 +4,14 @@
 let getLocation = () => new Promise((resolve, reject) =>
     navigator.geolocation.getCurrentPosition(resolve, reject));
 
-const motionBar = document.querySelector('#motion-bar');
-
+const motionBar = document.querySelector("#motion-bar");
+const timestamp = document.querySelector("#timestamp");
 
 async function main() {
     try {
-        console.log('getting location...');
         let location = await getLocation();
-        console.log('got location');
-        console.log(location);
         let lat = location.coords.latitude;
         let long = location.coords.longitude;
-        console.log(lat, long);
-        // lat/long for birth place - testing
-        lat = 40.733550;
-        long = -74.008660;
 
         const date = new Date();
         const yr = date.getFullYear();
@@ -26,6 +19,34 @@ async function main() {
         const dy = date.getDate();
         const hr = date.getHours();
         const min = date.getMinutes();
+
+        const current = document.createElement("p");
+        current.setAttribute("id", "current");
+        timestamp.appendChild(current);
+        if (mo + 1 < 10) current.innerHTML = `${yr} 0${mo + 1}`;
+        else current.innerHTML = `${yr} ${mo + 1}`;
+        if (dy < 10) current.innerHTML += ` 0${dy}`;
+        else current.innerHTML += ` ${dy}`;
+
+
+        const timeSpan = document.createElement("span");
+        timeSpan.style.color = "var(--green)";
+        current.appendChild(timeSpan);
+        if (hr < 10) timeSpan.innerHTML = ` 0${hr}:`;
+        else timeSpan.innerHTML = ` ${hr}:`;
+        if (min < 10) timeSpan.innerHTML += ` 0${min}`;
+        else timeSpan.innerHTML += ` ${min}`;
+
+        const latSpan = document.createElement("span");
+        latSpan.style.color = "white";
+        current.appendChild(latSpan);
+        latSpan.innerHTML = ` ${lat}°`;
+
+        const longSpan = document.createElement("span");
+        longSpan.style.color = "var(--green)";
+        current.appendChild(longSpan);
+        longSpan.innerHTML = ` ${long}°`;
+
 
         // NOTE - months go from 0 - 11 (0 = jan)
         const ephemeris = new Ephemeris.default({
@@ -39,19 +60,7 @@ async function main() {
             calculateShadows: false,
         });
 
-        console.log(ephemeris.Results);
-        console.log('mercury retrograde: ', ephemeris.mercury.motion.isRetrograde);
 
-        // const planetRetro = {
-        //     'mercury': true,
-        //     'venus': true,
-        //     'mars': true,
-        //     'jupiter': true,
-        //     'saturn': true,
-        //     'neptune': true,
-        //     'uranus': false,
-        //     'pluto': true,
-        // };
         const planetRetro = {
             'mercury': ephemeris.mercury.motion.isRetrograde,
             'venus': ephemeris.venus.motion.isRetrograde,
@@ -62,8 +71,6 @@ async function main() {
             'uranus': ephemeris.uranus.motion.isRetrograde,
             'pluto': ephemeris.pluto.motion.isRetrograde,
         };
-
-        console.log(planetRetro);
 
         sortPlanet(planetRetro);
 
@@ -86,18 +93,15 @@ function sortPlanet(retroMap) {
             directSet.push(planet);
         }
     }
-    console.log(`directSet: ${directSet}`);
-    console.log(`retroSet: ${retroSet}`);
 
     const planetSet = directSet.concat(retroSet);
-    console.log(planetSet);
 
     const planetDOMs = document.querySelectorAll('.planet');
 
     planetDOMs.forEach((planetDOM, idx) => {
         planetDOM.src = getIcon(`${planetSet[idx]}`);
         if (retroMap[planetSet[idx]]) {
-            planetDOM.style.filter = "var(--red)";
+            planetDOM.style.filter = "var(--green-filter)";
         };
     });
 
@@ -115,12 +119,14 @@ function setMotionBar(dSMax) {
         const segment = document.createElement("div");
         segment.setAttribute("class", "segment");
         motionBar.appendChild(segment);
+        if (i === 0) segment.setAttribute("class", "segment one");
+        if (i === 1) segment.setAttribute("class", "segment two");
         if (i > 1 && i < dSMax) {
             segment.style.backgroundColor = "#000000";
             segment.setAttribute("class", "segment direct");
         } else if (i >= dSMax) {
-            segment.style.backgroundColor = "#FF0000";
-            segment.setAttribute("class", " segment retro");
+            segment.style.backgroundColor = "var(--green)";
+            segment.setAttribute("class", "segment retro");
         }
     };
 
